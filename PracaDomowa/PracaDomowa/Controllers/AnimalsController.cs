@@ -1,13 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
+using PracaDomowa.Models;
 
-namespace PracaDomowa.Models;
+namespace PracaDomowa.Controllers;
 
 [Route("api/animals")]
 [ApiController]
 public class AnimalsController : ControllerBase
 {
-    public string GetAnimals()
+    private static readonly List<Animal> _animals = new()
     {
-        return "cat,dog,hamster"
+        new Animal { IdAnimal = 1, Name = "Puszek", Category = "kot", Weight = 5.45, FurColor = "biały" },
+        new Animal { IdAnimal = 2, Name = "Burek", Category = "pies", Weight = 33.2, FurColor = "czarny" }, 
+        new Animal { IdAnimal = 3, Name = "Ogryzek", Category = "chomik", Weight = 0.019, FurColor = "ciemnobrazowy" },
+        new Animal { IdAnimal = 4, Name = "Roko", Category = "papuga", Weight = 0.27, FurColor = "zielony" }
+
+    };
+    [HttpGet]
+    public IActionResult GetAnimals()
+    {
+        return Ok(_animals);
     }
+    
+    [HttpGet("{id:int}")]
+    public IActionResult GetAnimal(int id)
+    {
+        var animal = _animals.FirstOrDefault(a => a.IdAnimal == id);
+        if (animal == null)
+        {
+            return NotFound($"Aniaml with id {id} was not found");
+        }
+
+        return Ok(animal);
+    }
+    
+    
 }
