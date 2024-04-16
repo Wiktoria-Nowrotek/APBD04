@@ -32,6 +32,13 @@ public class AnimalsController : ControllerBase
 
         return Ok(animal);
     }
+
+    [HttpPost]
+    public IActionResult CreateAnimal(Animal animal)
+    {
+        _animals.Add(animal);
+        return StatusCode(StatusCodes.Status201Created);
+    }
     
     
 }
