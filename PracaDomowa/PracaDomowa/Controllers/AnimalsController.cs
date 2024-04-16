@@ -54,6 +54,18 @@ public class AnimalsController : ControllerBase
         _animals.Add(animal);
         return NoContent();
     }
-    
+
+    [HttpDelete("{id:int}")]
+    public IActionResult DelteAnimal(int id)
+    {
+        var animalToEdit = _animals.FirstOrDefault(a => a.IdAnimal == id);
+        if (animalToEdit == null)
+        {
+            return NoContent();
+        }
+
+        _animals.Remove(animalToEdit);
+        return NoContent();
+    }
     
 }
